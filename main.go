@@ -168,7 +168,7 @@ func handleVenues(db *sql.DB) http.HandlerFunc {
 		if venueChoice != "" {
 			rows, err = db.Query("SELECT id, name, location, region, link FROM venues WHERE venue = ?", venueChoice)
 		} else {
-			rows, err = db.Query("SELECT id, name, location, region, link FROM venue")
+			rows, err = db.Query("SELECT id, name, location, region, link FROM venues")
 		}
 
 		if err != nil {
@@ -193,13 +193,13 @@ func handleVenues(db *sql.DB) http.HandlerFunc {
 
 func handleArtists(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		artists := r.URL.Query().Get("artists")
+		artistChoice := r.URL.Query().Get("artist")
 
 		var rows *sql.Rows
 		var err error
 
-		if artists != "" {
-			rows, err = db.Query("SELECT id, name, dj_name, label, location, region, genre, link FROM artists WHERE name = ?", artists)
+		if artistChoice != "" {
+			rows, err = db.Query("SELECT id, name, dj_name, label, location, region, genre, link FROM artists WHERE name = ?", artistChoice)
 		} else {
 			rows, err = db.Query("SELECT id, name, dj_name, label, location, region, genre, link FROM artists")
 		}
