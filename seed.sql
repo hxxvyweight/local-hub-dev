@@ -18,3 +18,6 @@ INSERT INTO venues (name, location, region, link) VALUES
 
 INSERT INTO labels (name, location, region, link) VALUES
 ()
+
+INSERT INTO genres (name, location, region, link) VALUES
+()
