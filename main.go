@@ -90,10 +90,7 @@ func main() {
 		genre_id INTEGER NOT NULL,
 		history_link TEXT NOT NULL,
 		FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE
-	);
-	CREATE VIRTUAL TABLE IF NOT EXISTS global_search USING fts5 (
-		
-	)`
+	);`
 
 	if _, err := db.Exec(createTableQuery); err != nil {
 		log.Fatalf("Failed to create table: %v", err)
@@ -107,11 +104,15 @@ func main() {
 
 	http.HandleFunc("/api/artists", handleArtists(db))
 
+	http.HandleFunc("/api/labels", handleLabels(db))
+
 	log.Println("Backlend API running on http://localhost:8080")
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func seedDatabase(db *sql.DB) error {
+
 	var venueCount int
 	if err := db.QueryRow("SELECT COUNT(*) FROM venues").Scan(&venueCount); err == nil && venueCount == 0 {
 		venueSeed := `
@@ -131,6 +132,7 @@ func seedDatabase(db *sql.DB) error {
 
 	var artistCount int
 	if err := db.QueryRow("SELECT COUNT(*) FROM artists").Scan(&artistCount); err == nil && artistCount == 0 {
+
 		artistSeed := `
 	INSERT INTO artists (name, dj_name, label, location, region, genre, link) VALUES 
 	('Sylent', 'Sylent', 'Independent', 'Wollongong', 'Illawarra', 'house/ukg/techno/dnb', 'https://www.instagram.com/sylentau'),
@@ -152,9 +154,10 @@ func seedDatabase(db *sql.DB) error {
 }
 
 func handleVenues(db *sql.DB) http.HandlerFunc {
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		//Initialise variable region to hold and URL Query's for "region"
-		region := r.URL.Query().Get("region")
+		venueChoice := r.URL.Query().Get("venue")
 
 		var rows *sql.Rows
 		var err error
@@ -162,10 +165,10 @@ func handleVenues(db *sql.DB) http.HandlerFunc {
 		//Check if region input is not empty
 		//If not empty Query the sqlite db for id name location and region from venues if matching URL Query
 		//If no URL Query is inputted select from venues as default
-		if region != "" {
-			rows, err = db.Query("SELECT id, name, location, region, link FROM venues WHERE region = ?", region)
+		if venueChoice != "" {
+			rows, err = db.Query("SELECT id, name, location, region, link FROM venues WHERE venue = ?", venueChoice)
 		} else {
-			rows, err = db.Query("SELECT id, name, location, region, link FROM venues")
+			rows, err = db.Query("SELECT id, name, location, region, link FROM venue")
 		}
 
 		if err != nil {
