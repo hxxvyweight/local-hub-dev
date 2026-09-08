@@ -136,6 +136,41 @@ func handleArtists(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+func handleLabels(db *sql.DB) http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		labelChoice := r.URL.Query().Get("label")
+
+		var rows *sql.Rows
+		var err error
+
+		if labelChoice != "" {
+			rows, err := db.Query("SELECT id, name, location, region, genre, link FROM labels WHERE label = ?", labelChoice)
+		} else {
+			rows, err := db.Query("SELECT id, name, location, region, genre, link FROM labels")
+		}
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer rows.Close()
+
+		var labels []Label
+		for rows.Next() {
+			var l Label
+			if err = rows.Scan(&l.ID, &l.Name, &l.Location, &l.Region, &l.Genre, &l.Link); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			labels = append(labels, l)
+		}
+		writeJSON(w, labels)
+	}
+
+}
+
 func writeJSON(w http.ResponseWriter, data any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
