@@ -171,6 +171,41 @@ func handleLabels(db *sql.DB) http.HandlerFunc {
 
 }
 
+func handleGenres(db *sql.DB) http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		genreChoice := r.URL.Query().Get("genre")
+
+		var rows *sql.Rows
+		var err error
+
+		if genreChoice != "" {
+			rows, err = db.Query("SELECT id, name WHERE genre = ?", genreChoice)
+		} else {
+			rows, err = db.Query("SELECT id, name FROM genres")
+		}
+
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		var genres []Genre
+		for rows.Next() {
+			var g Genre
+			if err = rows.Scan(&g.ID, &g.Name); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			genres = append(genre, g)
+		}
+		writeJSON(w, genre)
+
+	}
+
+}
+
 func writeJSON(w http.ResponseWriter, data any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
