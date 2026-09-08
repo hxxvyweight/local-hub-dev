@@ -11,13 +11,17 @@ INSERT INTO artists (name, dj_name, label, location, region, genre, link) VALUES
 INSERT INTO venues (name, location, region, link) VALUES 
 ('Heyday', '270 Crown St', 'wollongong', 'https://heyday.com.au'),
 ('UOW UniBar', 'Building 12, Northfields Ave', 'wollongong', 'https://unibar.uow.edu.au'),
-('The Grand Hotel', '32 Spencer St', 'illawarra', ''),
-('Society', 'Keira St', 'wollongong', ''),
-('Rad Bar (Archive)', 'Formatting/Defunct Site', 'wollongong', ''),
+('The Grand Hotel', '32 Spencer St', 'illawarra', NULL),
+('Society', 'Keira St', 'wollongong', NULL),
+('Rad Bar (Archive)', 'Formatting/Defunct Site', 'wollongong', NULL),
 ('La La La''s', 'Globe Lane', 'wollongong', 'https://lalalas.com.au');
 
-INSERT INTO labels (name, location, region, link) VALUES
-()
+INSERT INTO labels (name, location, region, genre,  link) VALUES
+('Test Label', 'Testlabel Location St', 'Hardgroove', 'NSW', NULL);
 
-INSERT INTO genres (name, location, region, link) VALUES
-()
+INSERT INTO genres (name) VALUES
+('Hardgroove'),
+('Techno'),
+('Hard Techno'),
+('UKG'),
+('House');
