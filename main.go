@@ -45,7 +45,6 @@ type GenreLink struct {
 }
 
 func main() {
-
 	db, err := sql.Open("sqlite", "./local-hub.db")
 	if err != nil {
 		log.Fatal(err)

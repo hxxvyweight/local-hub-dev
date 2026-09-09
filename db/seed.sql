@@ -14,7 +14,7 @@ INSERT INTO venues (name, location, region, link) VALUES
 ('The Grand Hotel', '32 Spencer St', 'illawarra', NULL),
 ('Society', 'Keira St', 'wollongong', NULL),
 ('Rad Bar (Archive)', 'Formatting/Defunct Site', 'wollongong', NULL),
-('La La La''s', 'Globe Lane', 'wollongong', 'https://lalalas.com.au');
+('La La Las', 'Globe Lane', 'wollongong', 'https://lalalas.com.au');
 
 INSERT INTO labels (name, location, region, genre,  link) VALUES
 ('Test Label', 'Testlabel Location St', 'Hardgroove', 'NSW', NULL);
