@@ -1,36 +1,52 @@
-    CREATE TABLE IF NOT EXISTS venues (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        location TEXT NOT NULL,
-        region TEXT NOT NULL,
-        link TEXT
-    );
-    CREATE TABLE IF NOT EXISTS labels (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        location TEXT,
-        region TEXT NOT NULL,
-        genre TEXT NOT NULL,
-        link TEXT
-    );
-    CREATE TABLE IF NOT EXISTS artists (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        dj_name TEXT NOT NULL,
-        label TEXT,
-        location TEXT,
-        region TEXT,
-        genre TEXT NOT NULL,
-        link TEXT
-    );
-    CREATE TABLE IF NOT EXISTS genres (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL
-    );
-    CREATE TABLE IF NOT EXISTS genre_links (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        genre_id INTEGER NOT NULL,
-        history_link TEXT NOT NULL,
-        FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE
-    );
+CREATE TABLE IF NOT EXISTS venues (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    link TEXT
+);
+CREATE TABLE IF NOT EXISTS labels (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    link TEXT
+);
+CREATE TABLE IF NOT EXISTS artists (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    dj_name TEXT NOT NULL,
+    link TEXT
+);
+CREATE TABLE IF NOT EXISTS genres (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE
+);
 
+CREATE TABLE IF NOT EXISTS regions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE artist_genres (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    artist_id INTEGER NOT NULL,
+    genre_id INTEGER NOT NULL,
+    FOREIGN KEY (artist_id) REFERENCES artists(id),
+    FOREIGN KEY (genre_id) REFERENCES genres(id)
+);
+CREATE TABLE artist_labels (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    artist_id INTEGER NOT NULL,
+    label_id INTEGER NOT NULL,
+    FOREIGN KEY (artist_id) REFERENCES artists(id),
+    FOREIGN KEY (label_id) REFERENCES labels(id)
+);
+CREATE TABLE venue_genres (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    venue_id INTEGER NOT NULL,
+    genre_id INTEGER NOT NULL,
+    FOREIGN KEY (genre_id) REFERENCES genres(id),
+    FOREIGN KEY (venue_id) REFERENCES venues(id)
+);
+CREATE TABLE label_genres (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    label_id INTEGER NOT NULL,
+    genre_ID INTEGER NOT NULL
+);
