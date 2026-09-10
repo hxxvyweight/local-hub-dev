@@ -6,12 +6,6 @@ to pull together a whole music community into one central hub.
 I have designed this as a music producer and DJ myself, I found there wasn't really 
 a standardised way to find and explore the local music scene for myself and others, as the only 
 methods I and many other people currently use are through ticketing platforms, labels, and social media etc. 
-
-The goal of this project is to provide some sort of open directory for all local venues, and a voice for all 
-aspiring artists, DJ's, and labels of the like. It will not be based on any sort of ranking and will not categorise artists
-by popularity. It will not provide any bias nor favoritism and will purely be for displaying local skill,
-culture, people and the community.
-
 ## Stack
 
 ### *Front-end*
